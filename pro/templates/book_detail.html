@@ -1,0 +1,48 @@
+{% extends 'main.html'%} {% block content%}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <img class="thumbnail" src="{{book.image.url}}" />
+      <div class="box-element product">
+        <h6><strong>{{book.title}}</strong></h6>
+        <hr />
+        <h5><strong>Author:{{book.author}}</strong></h5>
+        <p>{{book.description}}</p>
+      </div>
+     
+    </div>
+    <div class="col-lg-7">
+      <form method="POST" action="/add_book_review/" style="margin-top: 10px;">
+        {% csrf_token %}
+      <div class="input-group mb-3">
+        <input type="hidden" name="book_id"value="{{book.id}}">
+        <input type="text" name="description" class="form-control" style="width:70% !important" placeholder="Your opinion" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <input type="number" name="rate" class="form-control" placeholder="Rate" min="1" max="5" aria-label="Recipient's username" aria-describedby="button-addon2">
+       
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit" id="button-addon2">Submit</button>
+        </div>
+      </div>
+      </form>
+      {%for review in book_review%} {%if review is not None %}
+      <div
+        class="card text-white bg-dark mb-3"
+        style="max-width: 100%; margin: 10px"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-danger" style="text-transform: uppercase">
+            {{review.user}}
+            <span class="badge badge-success" style="float: right"
+              >{{review.rate}}</span
+            >
+          </h5>
+          <p class="card-text">{{review.description}}</p>
+        </div>
+      </div>
+      {%endif%} {%endfor%}
+    </div>
+  </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,30 @@
+{% extends 'main.html'%}
+
+
+{%block content%}
+
+<form id="form" method="POST">
+    {% csrf_token %}
+     <div id="shipping-info">
+      <p style="color:black">Shipping Information:</p>
+      <hr>
+      <div class="form-field">
+        <input class="form-control" type="text" name="address_type" placeholder="address type.. ex.Home,Work" >
+      </div>
+      <div class="form-field">
+        <input class="form-control" type="text" name="city" placeholder="City..">
+      </div>
+      <div class="form-field">
+        <input class="form-control" type="text" name="street" placeholder="street..">
+      </div>
+      <div class="form-field">
+        <input class="form-control" type="text" name="building" placeholder="building number..">
+      </div>   
+      <div class="form-field">
+        <input class="form-control" type="text" name="phone" placeholder="Phone number..">
+      </div> 
+    </div>
+    <hr>
+    <input id="form-button" class="btn btn-success btn-block" type="submit" value="add address">
+  </form>
+  {%endblock%}

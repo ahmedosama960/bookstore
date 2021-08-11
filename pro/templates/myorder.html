@@ -1,0 +1,30 @@
+{% extends 'main.html'%} {% block content%}
+<div class="container">
+  <div class="row">
+      {%for order in orders%}
+    <div class="col-lg-4">
+      <div class="box-element">
+        <h3>Order Summary</h3>
+        <h6>Date : {{order.date}}</h6>
+        <h6>Pending order wait call to confirm</h6>
+        <div class="cart-row">
+          
+          <div style="flex: 2"><p>{{order.OrderItems.book.title}}</p></div>
+          <div style="flex: 1"><p>{{item.item.get_total}}</p></div>
+          <div style="flex: 1"><p>{{item.item.quantity}}</p></div>
+        
+        </div>
+        <h5>{{order.get_cart_items}} BOOKS</h5>
+        <h5>Total:{{order.get_cart_total}}EGP</h5>
+        <a
+          class="btn btn-outline-success"
+          href="{% url 'myorderdetail' order.id %}"
+          >View</a
+        >
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+  
+</div>
+{%endblock%}

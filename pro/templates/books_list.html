@@ -1,0 +1,96 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand text-danger" style="font-weight: bold;">Categories</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'main' %}"
+            >ALL <span class="sr-only">(current)</span></a
+          >
+        </li>
+        {% for navitem in category %}
+        <li class="nav-item" style="text-transform: uppercase">
+          <a class="nav-link" href="{% url 'category' navitem.name %}"
+            >{{navitem.name}}</a
+          >
+        </li>
+
+        {%endfor%}
+      </ul>
+      <form
+        method="POST"
+        action="{% url 'search_backend' %}"
+        class="form-inline my-2 my-lg-0"
+      >
+        {% csrf_token %}
+        <input
+          class="form-control mr-sm-2"
+          type="text"
+          id="searchfield"
+          name="searchfield"
+          placeholder="Example.. king lear"
+          aria-label="Search"
+        />
+        <button
+          class="btn btn-outline-success my-2 my-sm-0"
+          id="searchbtn"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+</div>
+<div class="container">
+  <div style="position:fixed;left:30%;top:100px;z-index:1000;width:50%">
+    <div class="toast text-light col-12"  data-hide="1000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body" style="width:100%">
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    {% for book in books%}
+    <div class="col-lg-4">
+      <img class="thumbnail" src="{{book.image.url}}" />
+      <div class="box-element product">
+        <h6><strong>{{book.title}}</strong></h6>
+        <hr />
+
+        <button
+          data-product="{{book.id}}"
+          data-action="add"
+          class="btn btn-outline-secondary add-btn update-cart"
+        >
+          Add to Cart
+        </button>
+        <a
+          class="btn btn-outline-success"
+          href="{% url 'book_detail' book.id %}"
+          >View</a
+        >
+        <h4 style="display: inline-block">
+          <strong>{{book.price}}$</strong>
+        </h4>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+<script>
+  
+</script>
+{% endblock content %}

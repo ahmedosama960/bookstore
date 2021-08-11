@@ -1,0 +1,119 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col col-md-5 mr-auto mt-3 table" style="border: 1px solid black; ">
+      <h6>Best Sales Customer</h6>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Total-Orders</th>
+            <th scope="col">View</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_ordering in user_ordering%}
+          <tr>
+            <th scope="row">{{user_ordering.id}}</th>
+            <td>{{user_ordering.name}}</td>
+            <td>{{user_ordering.total_order}}</td>
+            <td><a href="{%url 'myorderdashboard' user_ordering.id %}"class="btn btn-success">View</a></td>
+          </tr>
+          
+          {%endfor%}
+        </tbody>
+        <h4 style="display:inline-block">total income={{total_income}} of {{total_order}} order</h4><span>
+        </span>
+      </table>
+    </div>
+    <div class="col col col-md-5 mt-3 table" style="border: 1px solid blue;">
+      <h6>Best Sales Books</h6>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Name</th>
+            <th scope="col">Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cat_order in cat_order %}
+          <tr>
+            <th scope="row"></th>
+            <td >{{cat_order.name}}</td>
+            <td>{{cat_order.title}}</td>
+            <td>{{cat_order.count}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-3">
+    <div class="col">
+        <a  href="{% url 'add_books' %}" class="btn btn-success w-100">
+            Add book
+        </a>
+    </div>
+    <div class="col">
+        <a  href="{% url 'add_book_category' %}"class="btn btn-warning w-100">
+            Add Category
+        </a>
+    </div>
+</div>
+</div>
+<div class="container">
+    <div class="row" style=>
+      <div class=" col col-lg-6 table mt-2 mb-2" style="border: 1px solid black;">
+        <input
+    type="text"
+    id="myInput"
+    onkeyup="myFunction()"
+    placeholder="Search for Book.."
+  />
+  <ul id="myUL" style="padding:5px">
+    {%for book in books%}
+    <li>
+      <div class="row">
+          <span>{{book.title}} </span>//
+          <span>{{book.category}} </span>
+          <a  href="{% url 'book_detail' book.id %}" class="btn btn-success"style="float: right; border-radius:5px;margin-left:4px">View</a>
+          <a  href="{% url 'update_book' book.id %}" class="btn btn-primary" style="float: right; border-radius:5px;">update</a>
+          <a  href="{% url 'delete_book' book.id %}" class="btn btn-danger"style="float: right; border-radius:5px;margin-left:4px">Delete</a>
+        </div>
+    </li>
+    {%endfor%}
+  </ul>
+      </div>
+      <div class="col col-lg-6 table mt-2 mb-2" style="border: 1px solid black;">
+        <input
+        type="text"
+        id="myInput"
+        onkeyup="myFunction()"
+        placeholder="Search in Orders.."
+      />
+      <ul id="myUL" style="padding:5px">
+        {%for order in orders%}
+        <li>
+          <div >
+              <span> id={{order.id}}</span> |
+              <span>{{order.get_cart_items}} totalBOOKS</span> |
+              <span>Total:{{order.get_cart_total}}EGP</span>
+              
+              <a  href="{% url 'myorderdetail' order.id %}" class="btn btn-success"style="float: right; border-radius:5px;margin-left:4px">View</a>
+              </div>
+        </li>
+        {%endfor%}
+      </ul>
+      </div>
+
+</div>
+</div>
+{% endblock content %}

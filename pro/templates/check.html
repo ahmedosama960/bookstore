@@ -1,0 +1,62 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="container">
+  
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="box-element" id="form-wrapper">
+        <form id="form" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleFormControlSelect2" style="color: black;">Choose your address</label>
+            <select multiple class="form-control" name="address_id" id="exampleFormControlSelect2">
+             
+              {%for address in useradddres %}
+              <option value="{{address.id}}">{{address.address_type}} || {{address.city}} || {{address.building}} || {{address.street}} || {{address.phone}} </option>
+              {%endfor%}
+             
+            </select>
+          </div>
+          {% if order.get_cart_items <= 0 %}
+         <h4>Add some books and come back</h4>
+          {%else%}
+          <input id="form-button" class="btn btn-success btn-block" type="submit" value="procedd">
+          {%endif%}
+          <a href="{% url 'address' %}">add New address ? </a>
+        </form>
+        
+      </div>
+  
+      <br>
+<div class="box-element" id="payment-info">
+	<small>Accept cash only now , soon with credit card , thanks for understanding</small>
+</div>
+    </div>
+  
+    <div class="col-lg-6">
+      <div class="box-element">
+        <a class="btn btn-outline-dark" href="{% url 'cart' %}"
+          >&#x2190; Back to Cart</a
+        >
+        <hr />
+        <h3>Order Summary</h3>
+        <hr />
+        {%for item in items %}
+        <div class="cart-row">
+          <div style="flex: 2">
+            <img class="row-image" src="{{item.book.image.url}}" />
+          </div>
+          <div style="flex: 2"><p>{{item.book.title}}</p></div>
+          <div style="flex: 1"><p>{{item.get_total}}</p></div>
+          <div style="flex: 1"><p>{{item.quantity}}</p></div>
+        </div>
+        {%endfor%}
+        <h5>{{order.get_cart_items}} BOOKS</h5>
+        <h5>Total:{{order.get_cart_total}}EGP</h5>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+  
+{% endblock content %}

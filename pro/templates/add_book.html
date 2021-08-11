@@ -1,0 +1,47 @@
+{% extends 'main.html'%} {% load widget_tweaks %} {%block content%}
+
+
+  <div class="form form-problem">
+    <h2 class="text-dark">Add Book</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-fields">
+        
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Category</div>
+            </div>
+            {% render_field book_form.category class="form-control mg-10 input-display" id="category" placeholder="Category"  %}
+        </div>
+
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Title</div>
+            </div>
+            {% render_field book_form.title class="form-control mg-10 input-display" id="Title" placeholder="Title" %}
+        </div>
+        
+         <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Author</div>
+            </div>
+            {% render_field book_form.author class="form-control mg-10 input-display" id="Author" placeholder="Author" %}
+       </div>
+        
+        
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Price</div>
+            </div>
+            {% render_field book_form.price class="form-control mg-10 input-display"  placeholder="Price" %} 
+          </div>
+        {% render_field book_form.description class="form-control mg-10 " placeholder="Description" style="max-height:80px"%}
+        <label for="exampleFormControlFile1">Image Cover</label>
+        {% render_field book_form.image class="form-control-file mg-10" id="exampleFormControlFile1" placeholder="Category" %}
+        <input class="btn btn-primary" type="submit" value="Add Book" style="width: 100%; border-radius:5px" />
+      </div>
+    </form>
+  </div>
+
+{%endblock%}

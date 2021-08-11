@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {%load static%} {% load widget_tweaks %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+    <script>
+      let user = "{{request.user}}";
+      function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getToken("csrftoken");
+      
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="{%url 'main' %}"
+          >Enegma
+          <span class="text-danger" style="font-weight: bold">Book</span>
+          Store</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'myorder' %}"
+                >My orders <span class="sr-only">(current)</span></a
+              >
+            </li>
+          </ul>
+          <div class="form-inline my-2 my-lg-0">
+            {% if request.user.is_anonymous %}
+            <a href="{% url 'login' %}" class="btn btn-warning">login</a>
+            {%else%}
+            <a href="{% url 'logout' %}" class="btn btn-danger">logout</a>
+            {%endif%}
+            <a href="{% url 'cart'%}">
+              <img id="cart-icon" src="{% static 'images/cart.png'%}" />
+            </a>
+            <p id="cart-total">{{cartItems}}</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    {% block content%}  {%endblock%}
+  
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/jquery-3.5.1.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.js'%}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+
+
+</html>

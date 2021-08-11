@@ -1,0 +1,23 @@
+{% extends 'main.html'%}
+{%load widget_tweaks%}
+
+{%block content%}
+
+<div class="form form-problem">
+    <h2 class="text-dark">Add Category</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-fields">
+        
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Category</div>
+                </div>
+                {% render_field category_form.name class="form-control mg-10 input-display " type="text" id="category" placeholder="Category Name"  %}
+            </div>
+            <input class="btn btn-primary mt-3" type="submit" value="Add Category" style="width: 100%; border-radius:5px" />
+        </div>
+
+    </form>
+  </div>
+{%endblock%}
